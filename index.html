@@ -326,6 +326,89 @@
         function escapeHTML(s) { return s.replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t] || t)); }
 
         function generatePDF() {
+    if (registeredHouses.length === 0) { showToast("Sem registos para gerar PDF!", "alert-triangle"); return; }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const today = new Date();
+    const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const dateStr = "Maputo, aos " + today.getDate() + " de " + months[today.getMonth()] + " de " + today.getFullYear();
+    const numCasas = registeredHouses.length;
+    let y = 15;
+
+    doc.setFont("Helvetica","bold"); doc.setFontSize(10); doc.setTextColor(30,41,59);
+    doc.text("A: Direccao Regional da EDM - Sede da Machava", 14, y); y += 6;
+    doc.text("De: Moradores do Bairro Sao Damasco", 14, y); y += 6;
+    doc.setFont("Helvetica","normal"); doc.text(dateStr, 14, y); y += 10;
+
+    doc.setFont("Helvetica","bold"); doc.setFontSize(13); doc.setTextColor(15,23,42);
+    const title = "MEMORIAL DE RECLAMACAO COLETIVA - INFRAESTRUTURA ELETRICA DE BAIXA TENSAO";
+    const titleLines = doc.splitTextToSize(title, 182);
+    doc.text(titleLines, 14, y); y += titleLines.length * 7 + 4;
+
+    doc.setFont("Helvetica","bold"); doc.setFontSize(10); doc.setTextColor(30,41,59);
+    doc.text("Exmos. Senhores Directores e Responsaveis Tecnicos da EDM,", 14, y); y += 8;
+
+    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(51,65,85);
+    const intro = "Nos, moradores e consumidores de energia electrica da presente zona residencial, vimos por este meio formalizar, com caracter de urgencia, uma reclamacao colectiva referente as graves e recorrentes perturbacoes no fornecimento de energia electrica que afectam a nossa comunidade ha varios anos.";
+    const introLines = doc.splitTextToSize(intro, 182);
+    doc.text(introLines, 14, y); y += introLines.length * 5 + 5;
+
+    doc.setFont("Helvetica","bold"); doc.setFontSize(10);
+    doc.text("Da situacao verificada:", 14, y); y += 6;
+    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
+    const sit = "O poste que serve como ponto de ligacao entre a linha de distribuicao da rua principal e a nossa zona residencial tem sido alvo de intervencoes tecnicas em mais de 7 (sete) ocasioes, sem que o problema tenha sido definitivamente resolvido. De forma alarmante, em 4 (quatro) dessas ocorrencias, o referido poste entrou em combustao, provocando incendios que colocaram em risco a seguranca das familias residentes, os seus bens materiais e a integridade da rede electrica local. Este poste serve aproximadamente " + numCasas + " residencias da nossa zona.";
+    const sitLines = doc.splitTextToSize(sit, 182);
+    doc.text(sitLines, 14, y); y += sitLines.length * 5 + 5;
+
+    doc.setFont("Helvetica","bold"); doc.setFontSize(10);
+    doc.text("Da causa identificada:", 14, y); y += 6;
+    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
+    const causa = "Os signatarios identificam como causa principal destes constrangimentos a sobrecarga na linha de distribuicao secundaria. A situacao agrava-se notoriamente nas horas de ponta, periodo coincidente com o regresso dos moradores as suas habitacoes apos o dia de trabalho, momento em que a procura simultanea de energia supera a capacidade dos condutores instalados, resultando em baixa tensao generalizada e risco de incendio.";
+    const causaLines = doc.splitTextToSize(causa, 182);
+    doc.text(causaLines, 14, y); y += causaLines.length * 5 + 5;
+
+    doc.setFont("Helvetica","bold"); doc.setFontSize(10);
+    doc.text("Do pedido:", 14, y); y += 6;
+    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
+    const pedidos = [
+        "1. A substituicao e reforco dos condutores electricos da linha de distribuicao secundaria;",
+        "2. O aumento da capacidade de transmissao do ponto que serve a zona;",
+        "3. Uma avaliacao tecnica oficial da infraestrutura actual face a dimensao da comunidade servida;",
+        "4. Medidas preventivas que eliminem o risco de novos incendios no equipamento."
+    ];
+    pedidos.forEach(function(p) {
+        const pLines = doc.splitTextToSize(p, 178);
+        doc.text(pLines, 18, y); y += pLines.length * 5 + 2;
+    });
+    y += 4;
+
+    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
+    const enc = "Certos de que esta situacao merece atencao imediata por parte de V. Exas., apresentamos em anexo a listagem nominal dos moradores signatarios com os respectivos numeros de contador, como prova da dimensao da comunidade afectada. Esperamos uma resposta oficial no prazo de 30 dias uteis, sob pena de escalada da reclamacao as autoridades competentes.";
+    const encLines = doc.splitTextToSize(enc, 182);
+    doc.text(encLines, 14, y); y += encLines.length * 5 + 8;
+
+    doc.setFont("Helvetica","italic");
+    doc.text("Os Moradores Signatarios - Bairro Sao Damasco", 14, y); y += 12;
+
+    doc.autoTable({
+        startY: y,
+        head: [["#","Nome do Morador","No do Contador","Telemovel","Assinatura"]],
+        body: registeredHouses.map(function(h,i){ return [i+1, h.name, h.meter, h.phone, "_____________________"]; }),
+        theme: "striped",
+        headStyles: { fillColor: [15,23,42] },
+        columnStyles: { 0:{cellWidth:10}, 1:{cellWidth:55}, 2:{cellWidth:35}, 3:{cellWidth:32}, 4:{cellWidth:50} }
+    });
+
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFont("Helvetica","italic"); doc.setFontSize(8); doc.setTextColor(148,163,184);
+        doc.text("Documento gerado em " + today.toLocaleDateString("pt-PT") + " as " + today.toLocaleTimeString("pt-PT") + " - Pagina " + i + " de " + pageCount, 14, 290);
+    }
+
+    doc.save("Baixo_Assinado_" + today.toISOString().slice(0,10) + ".pdf");
+    showToast("PDF Gerado!", "file-text");
+}nction generatePDF() {
             if (registeredHouses.length === 0) return;
             const { jsPDF } = window.jspdf; const doc = new jsPDF();
             let currentY = 18;
