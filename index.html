@@ -26,6 +26,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans">
 
+    <!-- Header Principal -->
     <header class="bg-slate-900 text-white shadow-md py-4 px-6 sticky top-0 z-10">
         <div class="max-w-4xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -45,6 +46,8 @@
     </header>
 
     <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
+        
+        <!-- Banner e Contador de Progresso -->
         <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="space-y-2 text-center md:text-left">
                 <h2 class="text-xl font-bold text-slate-800">Problemas de Corrente Fraca ao Anoitecer</h2>
@@ -57,10 +60,12 @@
             </div>
         </div>
 
+        <!-- Formulário de Registo de Casa -->
         <section class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm relative">
             <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="plus-circle" class="text-amber-500"></i>Registrar Nova Casa</h3>
             <form id="houseForm" class="space-y-4">
                 <div id="formFieldsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4 transition-all duration-300">
+                    <!-- Nome -->
                     <div class="space-y-1">
                         <label for="ownerName" class="block text-xs font-bold uppercase tracking-wider text-slate-500">Nome Completo do Morador <span class="text-rose-500">*</span></label>
                         <div class="relative">
@@ -68,6 +73,8 @@
                             <input type="text" id="ownerName" required placeholder="Ex: Samuel Jorge Pololo" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all">
                         </div>
                     </div>
+                    
+                    <!-- Contador de Energia -->
                     <div class="space-y-1">
                         <label for="meterNumber" class="block text-xs font-bold uppercase tracking-wider text-slate-500">Número do Contador <span class="text-rose-500">*</span></label>
                         <div class="relative">
@@ -76,15 +83,19 @@
                         </div>
                         <p class="text-[10px] text-slate-400">Suporta Credelec (11/12 dítigos) ou antigos (5/6 dígitos).</p>
                     </div>
+                    
+                    <!-- Telemóvel / Celular -->
                     <div class="space-y-1">
                         <label for="phoneNumber" class="block text-xs font-bold uppercase tracking-wider text-slate-500">Telemóvel <span class="text-slate-400 font-normal">(Opcional)</span></label>
                         <div class="relative">
                             <span class="absolute left-3 top-3 text-slate-400"><i data-lucide="phone" class="w-4 h-4"></i></span>
                             <input type="tel" id="phoneNumber" pattern="^(82|83|84|85|86|87)[0-9]{7}$" maxlength="9" placeholder="Ex: 841234567" oninput="validateInputRealtime(this, 'phone')" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all">
                         </div>
-                        <p class="text-[10px] text-slate-400">9 dígitos começando por 83, 84 ou 87.</p>
+                        <p class="text-[10px] text-slate-400">9 dígitos começando por 82, 83, 84, 85, 86 ou 87.</p>
                     </div>
                 </div>
+
+                <!-- Botão Adicionar -->
                 <div class="pt-2 flex justify-end">
                     <button type="submit" class="w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 transform active:scale-95 duration-150">
                         <i data-lucide="plus" class="w-5 h-5"></i><span>Adicionar Casa</span>
@@ -93,6 +104,7 @@
             </form>
         </section>
 
+        <!-- Tabela de Registos -->
         <section class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="p-6 border-b border-slate-100 flex items-center justify-between flex-wrap gap-4">
                 <div>
@@ -126,19 +138,65 @@
             </div>
         </section>
 
+        <!-- BLOCO: COLABORAÇÃO E IMPORTAÇÃO INTELIGENTE -->
+        <section class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                <div class="text-amber-500"><i data-lucide="users"></i></div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-800">Colaboração Comunitária & Importação</h3>
+                    <p class="text-xs text-slate-400">Partilhe os seus dados, una listas ou extraia dados diretamente da transcrição de arquivos/PDFs.</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 1. Exportar Código de Partilha -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-700 flex items-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4 text-amber-500"></i>Enviar Meus Dados</h4>
+                        <p class="text-xs text-slate-400 mt-1">Gere o código seguro com as casas que registou para enviar por mensagem ao responsável geral.</p>
+                    </div>
+                    <button onclick="copyShareCode()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="copy" class="w-4 h-4"></i>Copiar Código de Partilha
+                    </button>
+                </div>
+
+                <!-- 2. Importar Código de Partilha -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-700 flex items-center gap-1.5"><i data-lucide="git-merge" class="w-4 h-4 text-amber-500"></i>Colar Código de Partilha</h4>
+                        <p class="text-xs text-slate-400 mt-1">Cole aqui o código encriptado recebido dos colegas para fundir as listas sem duplicados.</p>
+                    </div>
+                    <textarea id="importTextArea" placeholder="Cole o código encriptado aqui..." class="w-full h-12 bg-white border border-slate-200 rounded-xl p-2 text-xs font-mono focus:outline-none resize-none"></textarea>
+                    <button onclick="importShareCode()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i>Unir Código de Partilha
+                    </button>
+                </div>
+
+                <!-- 3. Extração Inteligente de Transcrição/PDF -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between space-y-3">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-700 flex items-center gap-1.5"><i data-lucide="file-spreadsheet" class="w-4 h-4 text-amber-500"></i>Extrair de Transcrição (PDF / Texto)</h4>
+                        <p class="text-xs text-slate-400 mt-1">Cole o texto corrido, copiado de um PDF ou WhatsApp. O robô vai identificar automaticamente Nomes, Contadores e Telemóveis.</p>
+                    </div>
+                    <textarea id="transcriptionTextArea" placeholder="Ex: 1. Samuel Pololo - Contador 102030405060 - Tel: 841234567&#10;Maria Anjos, 102030111111" class="w-full h-12 bg-white border border-slate-200 rounded-xl p-2 text-xs focus:outline-none resize-none"></textarea>
+                    <button onclick="analyzeTranscription()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="wand-2" class="w-4 h-4"></i>Analisar Transcrição
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Ações do PDF -->
         <section class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-slate-900 text-white p-6 rounded-2xl shadow-md">
             <div class="space-y-1 text-center sm:text-left">
                 <h4 class="font-bold">Finalizar e Gerar Baixo-Assinado</h4>
-                <p class="text-xs text-slate-400">Gera um ficheiro PDF formatado e pronto para impressão local ou envio digital.</p>
+                <p class="text-xs text-slate-400">Gera um ficheiro PDF formatado e pronto para entrega ou impressão local.</p>
             </div>
             <button onclick="generatePDF()" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-lg hover:shadow-amber-500/20 transition-all flex items-center justify-center gap-2 transform active:scale-95 duration-150"><i data-lucide="file-text" class="w-5 h-5"></i><span>Imprimir / Gerar PDF</span></button>
         </section>
     </main>
 
-    <footer class="bg-slate-100 border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-12">
-        <p>© 2026 Iniciativa Comunitária de Melhoria da Rede Elétrica.</p>
-    </footer>
-
+    <!-- Modal de Edição -->
     <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl border border-slate-200 max-w-lg w-full p-6 shadow-2xl transform scale-95 transition-all duration-300 space-y-4">
             <div class="flex items-center gap-3 text-slate-800">
@@ -170,13 +228,14 @@
         </div>
     </div>
 
+    <!-- Confirmar Exclusão Coletiva -->
     <div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl border border-slate-200 max-w-md w-full p-6 shadow-2xl transform scale-95 transition-all duration-300 space-y-4">
             <div class="flex items-center gap-3 text-rose-600">
                 <div class="bg-rose-50 p-2 rounded-full"><i data-lucide="alert-triangle" class="w-6 h-6"></i></div>
                 <h3 class="text-lg font-bold">Limpar todos os dados?</h3>
             </div>
-            <p class="text-sm text-slate-500">Isto irá apagar permanentemente todas as casas da memória. Não pode ser desfeito.</p>
+            <p class="text-sm text-slate-500">Isto irá apagar permanentemente todas as casas registadas na memória do telemóvel. Esta ação não pode ser desfeita.</p>
             <div class="flex gap-3 justify-end pt-2">
                 <button onclick="closeClearAllModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition-all">Cancelar</button>
                 <button onclick="clearAllData()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl text-sm transition-all shadow-md">Sim, Limpar Tudo</button>
@@ -184,14 +243,54 @@
         </div>
     </div>
 
+    <!-- MODAL DE PRÉ-VISUALIZAÇÃO DA TRANSCRIÇÃO DETETADA -->
+    <div id="transcriptionModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl border border-slate-200 max-w-2xl w-full p-6 shadow-2xl transform scale-95 transition-all duration-300 space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex items-center gap-3 text-emerald-600 border-b border-slate-100 pb-3">
+                <div class="bg-emerald-50 p-2 rounded-xl"><i data-lucide="search-code" class="w-6 h-6"></i></div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800">Casas Detetadas na Transcrição</h3>
+                    <p class="text-xs text-slate-400 font-medium">Reveja e confirme os dados antes de juntar à sua lista.</p>
+                </div>
+            </div>
+            
+            <div class="overflow-y-auto flex-grow rounded-xl border border-slate-100">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase font-bold sticky top-0">
+                        <tr>
+                            <th class="py-2.5 px-4 w-12 text-center">Importar</th>
+                            <th class="py-2.5 px-4">Nome Detetado</th>
+                            <th class="py-2.5 px-4 text-center">Nº Contador</th>
+                            <th class="py-2.5 px-4 text-center">Telemóvel</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transcriptionTableBody" class="divide-y divide-slate-100">
+                        <!-- Preenchido via javascript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex gap-3 justify-end pt-3 border-t border-slate-100">
+                <button onclick="closeTranscriptionModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition-all">Cancelar</button>
+                <button onclick="commitTranscription()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center gap-2">
+                    <i data-lucide="check-square" class="w-4 h-4"></i>Confirmar e Adicionar (<span id="parsedCountSpan">0</span>)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Rápido (Toasts) -->
     <div id="toastNotification" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-800 transform translate-y-24 opacity-0 transition-all duration-300 z-50">
         <span class="bg-amber-500 text-slate-950 p-1 rounded-md" id="toastIcon"><i data-lucide="check" class="w-4 h-4"></i></span>
         <span id="toastMessage" class="text-sm font-semibold">Casa adicionada!</span>
     </div>
 
+    <!-- Lógica da Aplicação -->
     <script>
         lucide.createIcons();
         let registeredHouses = JSON.parse(localStorage.getItem('registered_houses')) || [];
+        let parsedTranscriptionHouses = []; // Guarda temporariamente a análise do texto
+
         const houseForm = document.getElementById('houseForm');
         const ownerNameInput = document.getElementById('ownerName');
         const meterNumberInput = document.getElementById('meterNumber');
@@ -203,10 +302,16 @@
         const confirmModal = document.getElementById('confirmModal');
         const editModal = document.getElementById('editModal');
         const editForm = document.getElementById('editForm');
+        
         const editHouseIdInput = document.getElementById('editHouseId');
         const editOwnerNameInput = document.getElementById('editOwnerName');
         const editMeterNumberInput = document.getElementById('editMeterNumber');
         const editPhoneNumberInput = document.getElementById('editPhoneNumber');
+
+        const transcriptionModal = document.getElementById('transcriptionModal');
+        const transcriptionTableBody = document.getElementById('transcriptionTableBody');
+        const parsedCountSpan = document.getElementById('parsedCountSpan');
+
         const toastNotification = document.getElementById('toastNotification');
         const toastMessage = document.getElementById('toastMessage');
 
@@ -239,16 +344,23 @@
             const phone = phoneNumberInput.value.trim() || 'Não fornecido';
 
             if (meter.length < 5 || meter.length > 16 || (phone !== 'Não fornecido' && !/^(82|83|84|85|86|87)[0-9]{7}$/.test(phone))) {
-                showToast("Erro nas validações!", "alert-triangle");
+                showToast("Por favor, valide os dados introduzidos!", "alert-triangle");
+                return;
+            }
+
+            if (registeredHouses.some(h => h.meter === meter)) {
+                showToast("Erro: Este contador já foi registrado!", "alert-triangle");
                 return;
             }
 
             registeredHouses.push({ id: Date.now(), name, meter, phone, date: new Date().toLocaleDateString('pt-PT') });
             saveData();
+            
             formFieldsContainer.classList.add('animate-reset');
             ownerNameInput.value = ''; meterNumberInput.value = ''; phoneNumberInput.value = '';
             validateInputRealtime(meterNumberInput, 'meter'); validateInputRealtime(phoneNumberInput, 'phone');
             ownerNameInput.focus();
+            
             updateUI(true);
             showToast("Casa adicionada com sucesso!");
             setTimeout(() => formFieldsContainer.classList.remove('animate-reset'), 400);
@@ -269,12 +381,12 @@
                     const tr = document.createElement('tr');
                     tr.className = 'hover:bg-slate-100 cursor-pointer transition-colors';
                     tr.innerHTML = `
-                        <td class="py-3.5 px-6 text-slate-400 font-semibold">${index + 1}</td>
+                        <td class="py-3.5 px-6 text-slate-400 font-semibold select-none">${index + 1}</td>
                         <td class="py-3.5 px-6 font-semibold text-slate-800">${escapeHTML(house.name)}</td>
                         <td class="py-3.5 px-6 text-slate-600 font-mono">${escapeHTML(house.meter)}</td>
                         <td class="py-3.5 px-6 text-slate-500">${escapeHTML(house.phone)}</td>
                         <td class="py-3.5 px-6 text-center">
-                            <button onclick="event.stopPropagation(); deleteHouse(${house.id})" class="text-rose-500 hover:text-rose-700 p-2 rounded-lg transition-all"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <button onclick="event.stopPropagation(); deleteHouse(${house.id})" class="text-rose-500 hover:text-rose-700 p-2 rounded-lg transition-all" title="Apagar"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                         </td>
                     `;
                     tr.onclick = () => openEditModal(house.id);
@@ -282,6 +394,211 @@
                 });
                 lucide.createIcons();
             }
+        }
+
+        // COPIAR CÓDIGO DE PARTILHA (Encriptação leve Base64)
+        function copyShareCode() {
+            if (registeredHouses.length === 0) {
+                showToast("Não tem dados para partilhar!", "alert-triangle");
+                return;
+            }
+            const dataString = JSON.stringify(registeredHouses);
+            const encodedData = btoa(unescape(encodeURIComponent(dataString)));
+            
+            // Usar o método recomendado do Canvas
+            const textareaTemp = document.createElement("textarea");
+            textareaTemp.value = encodedData;
+            document.body.appendChild(textareaTemp);
+            textareaTemp.select();
+            document.execCommand('copy');
+            document.body.removeChild(textareaTemp);
+            showToast("Código copiado! Envie via WhatsApp.", "copy");
+        }
+
+        // UNIR CÓDIGO DE COLEGAS
+        function importShareCode() {
+            const textarea = document.getElementById('importTextArea');
+            const rawValue = textarea.value.trim();
+            if (!rawValue) {
+                showToast("Por favor, cole o código primeiro!", "alert-triangle");
+                return;
+            }
+
+            try {
+                const decodedData = decodeURIComponent(escape(atob(rawValue)));
+                const incomingHouses = JSON.parse(decodedData);
+                if (!Array.isArray(incomingHouses)) throw new Error("Inválido");
+
+                let addedCount = 0;
+                let duplicateCount = 0;
+
+                incomingHouses.forEach(incoming => {
+                    const exists = registeredHouses.some(existing => existing.meter === incoming.meter);
+                    if (!exists) {
+                        incoming.id = Date.now() + Math.floor(Math.random() * 1000);
+                        registeredHouses.push(incoming);
+                        addedCount++;
+                    } else {
+                        duplicateCount++;
+                    }
+                });
+
+                if (addedCount > 0) {
+                    saveData(); updateUI(true); textarea.value = '';
+                    showToast(`Sucesso! +${addedCount} casas unidas.`, "git-merge");
+                } else if (duplicateCount > 0) {
+                    showToast(`Todas as casas já existiam no sistema.`, "alert-triangle");
+                }
+            } catch (e) {
+                showToast("Código inválido ou corrompido!", "alert-triangle");
+            }
+        }
+
+        // ALGORITMO INTELIGENTE DE TRANSCRIÇÃO (LEITOR DE PDF / WHATSAPP / TEXTO)
+        function analyzeTranscription() {
+            const text = document.getElementById('transcriptionTextArea').value.trim();
+            if (!text) {
+                showToast("Por favor, cole o texto da transcrição primeiro!", "alert-triangle");
+                return;
+            }
+
+            const lines = text.split('\n');
+            parsedTranscriptionHouses = [];
+
+            lines.forEach(line => {
+                let cleanLine = line.trim();
+                if (!cleanLine) return;
+
+                // 1. Extrair Telemóvel (9 dígitos começados por 82-87)
+                const phoneRegex = /\b(82|83|84|85|86|87)[0-9]{7}\b/;
+                const phoneMatch = cleanLine.match(phoneRegex);
+                let phone = "Não fornecido";
+                if (phoneMatch) {
+                    phone = phoneMatch[0];
+                    cleanLine = cleanLine.replace(phone, '').trim();
+                }
+
+                // 2. Extrair Número do Contador (5 a 16 dígitos)
+                const meterRegex = /\b[0-9]{5,16}\b/;
+                const meterMatch = cleanLine.match(meterRegex);
+                let meter = "";
+                if (meterMatch) {
+                    meter = meterMatch[0];
+                    cleanLine = cleanLine.replace(meter, '').trim();
+                }
+
+                // 3. O resto é considerado o Nome do Morador
+                // Limpar pontuações, traços, bullets, número de ordem, palavras "contador/celular" comuns
+                let name = cleanLine
+                    .replace(/^[\d\s\.\-\–\—\*\•\#\(\)]+/, '') // remove prefixos numéricos e bullets
+                    .replace(/\b(contador|contadore?s?|telefone|celular|telemovel|contacto|no|nº|\-|\,|\:)\b/gi, '') // remove palavras-chave
+                    .replace(/[\s\-\–\—\,\;\|\:\/]+$/, '') // limpa sufixos de divisão de texto
+                    .replace(/\s+/g, ' ') // normaliza espaços duplos
+                    .trim();
+
+                // Garante um nome elegante
+                if (name.length < 2) {
+                    name = "Morador Desconhecido";
+                }
+
+                // Se detetámos pelo menos um número de contador, é um registo viável!
+                if (meter) {
+                    parsedTranscriptionHouses.push({
+                        id: Date.now() + Math.floor(Math.random() * 10000),
+                        name: name,
+                        meter: meter,
+                        phone: phone,
+                        selected: true // Marcado por padrão para importação
+                    });
+                }
+            });
+
+            if (parsedTranscriptionHouses.length === 0) {
+                showToast("Não foi possível detetar nenhum contador válido!", "alert-triangle");
+                return;
+            }
+
+            // Desenhar a tabela de pré-visualização no modal
+            renderTranscriptionModal();
+            openTranscriptionModal();
+        }
+
+        function renderTranscriptionModal() {
+            transcriptionTableBody.innerHTML = '';
+            let selectedCount = 0;
+
+            parsedTranscriptionHouses.forEach((house, index) => {
+                const isDuplicate = registeredHouses.some(existing => existing.meter === house.meter);
+                if (isDuplicate) {
+                    house.selected = false; // Desmarcar duplicados automaticamente
+                } else if (house.selected) {
+                    selectedCount++;
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = `hover:bg-slate-50 transition-colors ${isDuplicate ? 'bg-rose-50/50' : ''}`;
+                tr.innerHTML = `
+                    <td class="py-2.5 px-4 text-center select-none">
+                        ${isDuplicate 
+                            ? `<span class="text-[10px] font-bold text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded-full">Duplicado</span>`
+                            : `<input type="checkbox" ${house.selected ? 'checked' : ''} onchange="toggleParsedHouse(${house.id})" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">`
+                        }
+                    </td>
+                    <td class="py-2.5 px-4 font-semibold text-slate-800">${escapeHTML(house.name)}</td>
+                    <td class="py-2.5 px-4 text-center text-slate-600 font-mono">${escapeHTML(house.meter)}</td>
+                    <td class="py-2.5 px-4 text-center text-slate-500">${escapeHTML(house.phone)}</td>
+                `;
+                transcriptionTableBody.appendChild(tr);
+            });
+
+            parsedCountSpan.textContent = selectedCount;
+            lucide.createIcons();
+        }
+
+        function toggleParsedHouse(id) {
+            const house = parsedTranscriptionHouses.find(h => h.id === id);
+            if (house) {
+                house.selected = !house.selected;
+                renderTranscriptionModal();
+            }
+        }
+
+        function openTranscriptionModal() {
+            transcriptionModal.classList.remove('hidden');
+            setTimeout(() => {
+                transcriptionModal.firstElementChild.classList.replace('scale-95', 'scale-100');
+            }, 10);
+        }
+
+        function closeTranscriptionModal() {
+            transcriptionModal.firstElementChild.classList.replace('scale-100', 'scale-95');
+            setTimeout(() => {
+                transcriptionModal.classList.add('hidden');
+            }, 150);
+        }
+
+        function commitTranscription() {
+            const toImport = parsedTranscriptionHouses.filter(h => h.selected);
+            if (toImport.length === 0) {
+                showToast("Por favor, selecione pelo menos um registo!", "alert-triangle");
+                return;
+            }
+
+            toImport.forEach(house => {
+                registeredHouses.push({
+                    id: house.id,
+                    name: house.name,
+                    meter: house.meter,
+                    phone: house.phone,
+                    date: new Date().toLocaleDateString('pt-PT')
+                });
+            });
+
+            saveData();
+            updateUI(true);
+            closeTranscriptionModal();
+            document.getElementById('transcriptionTextArea').value = ''; // Limpar input
+            showToast(`Sucesso! +${toImport.length} casas adicionadas.`, "wand-2");
         }
 
         function openEditModal(id) {
@@ -308,8 +625,13 @@
 
             if (meter.length < 5 || meter.length > 16 || (phone !== 'Não fornecido' && !/^(82|83|84|85|86|87)[0-9]{7}$/.test(phone))) return;
 
+            if (registeredHouses.some(h => h.meter === meter && h.id !== id)) {
+                showToast("Erro: Esse contador já existe noutra casa!", "alert-triangle");
+                return;
+            }
+
             registeredHouses = registeredHouses.map(h => h.id === id ? { ...h, name, meter, phone } : h);
-            saveData(); updateUI(); closeEditModal(); showToast("Dados atualizados!", "edit-3");
+            saveData(); updateUI(); closeEditModal(); showToast("Dados updated!", "edit-3");
         });
 
         function deleteHouse(id) { registeredHouses = registeredHouses.filter(h => h.id !== id); saveData(); updateUI(); showToast("Registo removido", "trash-2"); }
@@ -326,111 +648,86 @@
         function escapeHTML(s) { return s.replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t] || t)); }
 
         function generatePDF() {
-    if (registeredHouses.length === 0) { showToast("Sem registos para gerar PDF!", "alert-triangle"); return; }
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const today = new Date();
-    const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-    const dateStr = "Maputo, aos " + today.getDate() + " de " + months[today.getMonth()] + " de " + today.getFullYear();
-    const numCasas = registeredHouses.length;
-    let y = 15;
+            if (registeredHouses.length === 0) {
+                showToast("Adicione pelo menos um morador!", "alert-triangle");
+                return;
+            }
+            const { jsPDF } = window.jspdf; 
+            const doc = new jsPDF();
+            
+            const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            const hoje = new Date();
+            const dia = hoje.getDate();
+            const mesExtenso = meses[hoje.getMonth()];
+            const ano = hoje.getFullYear();
+            const dataCidade = `Maputo, aos ${dia} de ${mesExtenso} de ${ano}`;
 
-    doc.setFont("Helvetica","bold"); doc.setFontSize(10); doc.setTextColor(30,41,59);
-    doc.text("A: Direccao Regional da EDM - Sede da Machava", 14, y); y += 6;
-    doc.text("De: Moradores do Bairro Sao Damasco", 14, y); y += 6;
-    doc.setFont("Helvetica","normal"); doc.text(dateStr, 14, y); y += 10;
-
-    doc.setFont("Helvetica","bold"); doc.setFontSize(13); doc.setTextColor(15,23,42);
-    const title = "MEMORIAL DE RECLAMACAO COLETIVA - INFRAESTRUTURA ELETRICA DE BAIXA TENSAO";
-    const titleLines = doc.splitTextToSize(title, 182);
-    doc.text(titleLines, 14, y); y += titleLines.length * 7 + 4;
-
-    doc.setFont("Helvetica","bold"); doc.setFontSize(10); doc.setTextColor(30,41,59);
-    doc.text("Exmos. Senhores Directores e Responsaveis Tecnicos da EDM,", 14, y); y += 8;
-
-    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(51,65,85);
-    const intro = "Nos, moradores e consumidores de energia electrica da presente zona residencial, vimos por este meio formalizar, com caracter de urgencia, uma reclamacao colectiva referente as graves e recorrentes perturbacoes no fornecimento de energia electrica que afectam a nossa comunidade ha varios anos.";
-    const introLines = doc.splitTextToSize(intro, 182);
-    doc.text(introLines, 14, y); y += introLines.length * 5 + 5;
-
-    doc.setFont("Helvetica","bold"); doc.setFontSize(10);
-    doc.text("Da situacao verificada:", 14, y); y += 6;
-    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
-    const sit = "O poste que serve como ponto de ligacao entre a linha de distribuicao da rua principal e a nossa zona residencial tem sido alvo de intervencoes tecnicas em mais de 7 (sete) ocasioes, sem que o problema tenha sido definitivamente resolvido. De forma alarmante, em 4 (quatro) dessas ocorrencias, o referido poste entrou em combustao, provocando incendios que colocaram em risco a seguranca das familias residentes, os seus bens materiais e a integridade da rede electrica local. Este poste serve aproximadamente " + numCasas + " residencias da nossa zona.";
-    const sitLines = doc.splitTextToSize(sit, 182);
-    doc.text(sitLines, 14, y); y += sitLines.length * 5 + 5;
-
-    doc.setFont("Helvetica","bold"); doc.setFontSize(10);
-    doc.text("Da causa identificada:", 14, y); y += 6;
-    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
-    const causa = "Os signatarios identificam como causa principal destes constrangimentos a sobrecarga na linha de distribuicao secundaria. A situacao agrava-se notoriamente nas horas de ponta, periodo coincidente com o regresso dos moradores as suas habitacoes apos o dia de trabalho, momento em que a procura simultanea de energia supera a capacidade dos condutores instalados, resultando em baixa tensao generalizada e risco de incendio.";
-    const causaLines = doc.splitTextToSize(causa, 182);
-    doc.text(causaLines, 14, y); y += causaLines.length * 5 + 5;
-
-    doc.setFont("Helvetica","bold"); doc.setFontSize(10);
-    doc.text("Do pedido:", 14, y); y += 6;
-    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
-    const pedidos = [
-        "1. A substituicao e reforco dos condutores electricos da linha de distribuicao secundaria;",
-        "2. O aumento da capacidade de transmissao do ponto que serve a zona;",
-        "3. Uma avaliacao tecnica oficial da infraestrutura actual face a dimensao da comunidade servida;",
-        "4. Medidas preventivas que eliminem o risco de novos incendios no equipamento."
-    ];
-    pedidos.forEach(function(p) {
-        const pLines = doc.splitTextToSize(p, 178);
-        doc.text(pLines, 18, y); y += pLines.length * 5 + 2;
-    });
-    y += 4;
-
-    doc.setFont("Helvetica","normal"); doc.setFontSize(9.5);
-    const enc = "Certos de que esta situacao merece atencao imediata por parte de V. Exas., apresentamos em anexo a listagem nominal dos moradores signatarios com os respectivos numeros de contador, como prova da dimensao da comunidade afectada. Esperamos uma resposta oficial no prazo de 30 dias uteis, sob pena de escalada da reclamacao as autoridades competentes.";
-    const encLines = doc.splitTextToSize(enc, 182);
-    doc.text(encLines, 14, y); y += encLines.length * 5 + 8;
-
-    doc.setFont("Helvetica","italic");
-    doc.text("Os Moradores Signatarios - Bairro Sao Damasco", 14, y); y += 12;
-
-    doc.autoTable({
-        startY: y,
-        head: [["#","Nome do Morador","No do Contador","Telemovel","Assinatura"]],
-        body: registeredHouses.map(function(h,i){ return [i+1, h.name, h.meter, h.phone, "_____________________"]; }),
-        theme: "striped",
-        headStyles: { fillColor: [15,23,42] },
-        columnStyles: { 0:{cellWidth:10}, 1:{cellWidth:55}, 2:{cellWidth:35}, 3:{cellWidth:32}, 4:{cellWidth:50} }
-    });
-
-    const pageCount = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFont("Helvetica","italic"); doc.setFontSize(8); doc.setTextColor(148,163,184);
-        doc.text("Documento gerado em " + today.toLocaleDateString("pt-PT") + " as " + today.toLocaleTimeString("pt-PT") + " - Pagina " + i + " de " + pageCount, 14, 290);
-    }
-
-    doc.save("Baixo_Assinado_" + today.toISOString().slice(0,10) + ".pdf");
-    showToast("PDF Gerado!", "file-text");
-}nction generatePDF() {
-            if (registeredHouses.length === 0) return;
-            const { jsPDF } = window.jspdf; const doc = new jsPDF();
             let currentY = 18;
-            doc.setFont("Helvetica", "bold"); doc.setFontSize(16); doc.setTextColor(30, 41, 59);
-            doc.text("MEMORIAL DE RECLAMAÇÃO COLETIVA - BAIXA TENSÃO", 14, currentY);
-            currentY += 16;
-            doc.setFont("Helvetica", "bold"); doc.setFontSize(11); doc.text("Exmos. Senhores Responsáveis pela Electricidade de Moçambique (EDM),", 14, currentY);
-            currentY += 6;
-            doc.setFont("Helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(51, 65, 85);
-            const text = "Nós, moradores signatários, vimos por este meio expor e reclamar formalmente sobre as constantes quedas de corrente verificadas ao anoitecer. Apresentamos a listagem nominal com os respetivos contadores para efeitos de Baixo-Assinado coletivo:";
-            const splitTxt = doc.splitTextToSize(text, 182); doc.text(splitTxt, 14, currentY);
-            currentY += (splitTxt.length * 4) + 6;
+            
+            doc.setFont("Helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(30, 41, 59);
+            doc.text("À Direcção Regional da EDM — Sede da Machava", 14, currentY); currentY += 5;
+            doc.text("Remetente: Moradores do Bairro São Damasco", 14, currentY); currentY += 5;
+            doc.setFont("Helvetica", "normal"); doc.text(dataCidade, 14, currentY); currentY += 12;
+            
+            doc.setDrawColor(226, 232, 240); doc.setLineWidth(0.5); doc.line(14, currentY, 196, currentY); currentY += 10;
+            
+            doc.setFont("Helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(15, 23, 42);
+            const titleText = "MEMORIAL DE RECLAMAÇÃO COLETIVA — INFRAESTRUTURA ELÉTRICA DE BAIXA TENSÃO";
+            const splitTitle = doc.splitTextToSize(titleText, 182); doc.text(splitTitle, 14, currentY);
+            currentY += (splitTitle.length * 5) + 8;
+            
+            const addTextParagraph = (textStr, isBold = false, fontSize = 9.5, bottomMargin = 5) => {
+                doc.setFont("Helvetica", isBold ? "bold" : "normal"); doc.setFontSize(fontSize); doc.setTextColor(51, 65, 85);
+                const lines = doc.splitTextToSize(textStr, 182);
+                const paragraphHeight = lines.length * 4.5;
+                if (currentY + paragraphHeight > 270) { doc.addPage(); currentY = 20; }
+                doc.text(lines, 14, currentY); currentY += paragraphHeight + bottomMargin;
+            };
+
+            // Corpo do Documento Oficializado
+            documentText = "Nós, moradores e consumidores de energia elétrica da presente zona residencial, vimos por este meio formalizar, com caráter de urgência, uma reclamação coletiva referente às graves e recorrentes perturbações no fornecimento de energia elétrica que afetam a nossa comunidade há vários anos.";
+            addTextParagraph(documentText);
+
+            addTextParagraph("Da situação verificada:", true, 10, 3);
+            addTextParagraph(`O poste que serve como ponto de ligação entre a linha de distribuição da rua principal e a nossa zona residencial tem sido alvo de intervenções técnicas em mais de 7 (sete) ocasiões, sem que o problema tenha sido definitivamente resolvido. De forma alarmante, em 4 (quatro) dessas ocorrências, o referido poste entrou em combustão, provocando incêndios que colocaram em risco a segurança das famílias residentes, os seus bens materiais e a integridade da rede elétrica local. Este poste serve aproximadamente ${registeredHouses.length} residências da nossa zona.`);
+
+            addTextParagraph("Da causa identificada:", true, 10, 3);
+            addTextParagraph("Os signatários identificam como causa principal destes constrangimentos a sobrecarga na linha de distribuição secundária. A situação agrava-se notoriamente nas horas de ponta — período coincidente com o regresso dos moradores às suas habitações após o dia de trabalho — momento em que a procura simultânea de energia supera a capacidade dos condutores instalados, resultando em baixa tensão generalizada e risco de incêndio.");
+
+            addTextParagraph("Do pedido:", true, 10, 3);
+            addTextParagraph(
+                "1. A substituição e reforço dos condutores elétricos da linha de distribuição secundária;\n" +
+                "2. O aumento da capacidade de transmissão do ponto que serve a zona;\n" +
+                "3. Uma avaliação técnica oficial da infraestrutura atual face à dimensão da comunidade servida;\n" +
+                "4. Medidas preventivas que eliminem o risco de novos incêndios no equipamento."
+            );
+
+            addTextParagraph("Encerramento:", true, 10, 3);
+            addTextParagraph("Certos de que esta situação merece atenção imediata por parte de V. Exas., apresentamos em anexo a listagem nominal dos moradores signatários com os respetivos números de contador, como prova da dimensão da comunidade afetada. Esperamos uma resposta oficial no prazo de 30 dias úteis, sob pena de escalada da reclamação às autoridades competentes.");
+
+            addTextParagraph("Assinatura: Os Moradores Signatários — Bairro São Damasco", true, 10, 8);
 
             doc.autoTable({
                 startY: currentY,
-                head: [["#", "Nome do Morador", "Nº do Contador", "Telemóvel", "Assinatura"]],
+                head: [["#", "Nome do Morador", "Nº do Contador", "Telemóvel", "Assinatura Física"]],
                 body: registeredHouses.map((h, i) => [i + 1, h.name, h.meter, h.phone, "_____________________"]),
-                theme: 'striped', headStyles: { fillColor: [30, 41, 59] },
-                columnStyles: { 0: { cellWidth: 10 }, 1: { cellWidth: 55 }, 2: { cellWidth: 35 }, 3: { cellWidth: 32 }, 4: { cellWidth: 50 } }
+                theme: 'striped', headStyles: { fillColor: [30, 41, 59], fontSize: 9 },
+                bodyStyles: { fontSize: 8.5 },
+                columnStyles: { 0: { cellWidth: 10 }, 1: { cellWidth: 55 }, 2: { cellWidth: 35 }, 3: { cellWidth: 32 }, 4: { cellWidth: 50 } },
+                margin: { left: 14, right: 14 }
             });
-            doc.save(`Baixo_Assinado_Energia_${new Date().toISOString().slice(0, 10)}.pdf`);
-            showToast("PDF Gerado!", "file-text");
+            
+            const totalPages = doc.internal.getNumberOfPages();
+            const dataAtual = hoje.toLocaleDateString('pt-PT');
+            const horaAtual = hoje.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i); doc.setFontSize(8); doc.setTextColor(148, 163, 184);
+                doc.text(`Documento gerado em ${dataAtual} às ${horaAtual} — Página ${i} de ${totalPages}`, 14, 287);
+            }
+
+            doc.save(`Baixo_Assinado_Energia_Machava.pdf`);
+            showToast("PDF formalizado gerado!", "file-text");
         }
     </script>
 </body>
